@@ -11,7 +11,7 @@ class WifiScanner():
         self.nm = nmap.PortScanner()
         file = 'home_macs.txt'
         self.home_hosts = self._create_mac_list(file)
-        self.home_macs = {host['mac']: host['name'] for host in self.home_hosts}
+        self.home_macs = {host[1]: host[1] for host in self.home_hosts}
         self.active_hosts = []
 
     def _create_mac_list(self, file):
@@ -26,17 +26,20 @@ class WifiScanner():
 # TODO work about correct output from nm scan - need mac adress
     def scan(self):
         report = []
-        self.nm.scan(hosts='192.168.1.1/24', arguments='-n -sP')
+        self.nm.scan(hosts='192.168.1.1/24', arguments='-sP')
         # self.nm.scan(hosts='192.168.1.1/24', arguments='-O')
         active_hosts = self.nm.all_hosts()
-        # return active_hosts
-        for host in active_hosts:
-            result = self.nm.scan(host, arguments="-O")
-            report.append(result)
-        return report
+        return active_hosts
+        # for host in active_hosts:
+        # #     if 'mac' in self.nm[host]['addresses']:
+        # #         print(host + ' : ' + self.nm[host]['addresses']['mac'])
+        #     # print(host)
+        #     # result = self.nm.scan(host, arguments="-O")
+        #     # report.append(result)
+        # return report
 
     def check_home_host_is_on(self):
-        active_macs = [active_host['mac'] for active_host in active_hosts]
+        active_macs = [active_host[1] for active_host in active_hosts]
         for active_mac in active_macs:
             if active_mac in self.home_macs:
                 pass
@@ -49,5 +52,5 @@ class WifiScanner():
 if __name__ == "__main__":
     wf = WifiScanner()
     active_hosts = wf.scan()
-    print(active_hosts)
+    # print(active_hosts)
     # print(wf.home_macs)
