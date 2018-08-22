@@ -1,0 +1,5 @@
+.idea/
+*.pyc
+home_macs.txt
+active_macs.txt
+venv/
