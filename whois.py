@@ -8,7 +8,7 @@ class WhoIs():
     def _get_home_macs(self):
         home_macs = {}
         with open('home_macs.txt', 'r') as f:
-            for line in f:
+            for line in f.read().splitlines():
                 record = line.split(" ")
                 MAC = record[1]
                 IP = record[0]
@@ -19,20 +19,19 @@ class WhoIs():
     def _open_active_macs(self):
         active_macs = {}
         with open('active_macs.txt', 'r') as f:
-            for line in f:
+            for line in f.read().splitlines():
                 record = line.split(" ")
-                if len(record) == 2:
+                if ":" in record[1]:
                     MAC = record[1]
                     IP = record[0]
                     active_macs[MAC] = IP
                 else:
                     self.my_ip = record[0]
-                    del active_macs[record[0]]
         return active_macs
 
     def compare_macs(self):
         new_macs = []
-        for active_mac in self.active_macs:
+        for active_mac in self.active_macs.keys():
             if active_mac in self.home_macs:
                 self.home_macs[active_mac][2] = True
             else:
@@ -40,7 +39,8 @@ class WhoIs():
         return new_macs
 
     def get_inmates_status(self):
-        inmates = [(value[1], value[2]) for (_, value) in self.home_macs.items()]
+        inmates = [(value[1], value[2]) for (_, value) in
+                   self.home_macs.items()]
         return inmates
 
     def print_inmates_status(self):
@@ -54,6 +54,6 @@ class WhoIs():
 
 if __name__ == "__main__":
     w = WhoIs()
-    print(w.compare_macs())
+    w.compare_macs()
     w.print_inmates_status()
-    #TODO remove files
+    # TODO remove files
