@@ -59,7 +59,8 @@ class WhoIs():
 
 if __name__ == "__main__":
     w = WhoIs()
-    w.compare_macs()
+    new_macs = w.compare_macs()
     f = w.create_inmates_status_file()
-    sys.stdout.write('%s\r' % f[:-2])
-    sys.stdout.flush()
+    print(f)
+    if new_macs != []:
+        print("New macs: ", new_macs)
