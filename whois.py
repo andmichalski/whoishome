@@ -1,3 +1,6 @@
+import sys
+
+
 class WhoIs():
 
     def __init__(self):
@@ -43,17 +46,20 @@ class WhoIs():
                    self.home_macs.items()]
         return inmates
 
-    def print_inmates_status(self):
+    def create_inmates_status_file(self):
         inmates = self.get_inmates_status()
-        print("NAME | IS_ACTIVE")
+        text = ""
+        text += '{:^20s}|{:^20s}\n'.format("NAME", "IS_ACTIVE")
+        text += 41*"-" + "\n"
         for inmate in inmates:
             NAME = inmate[0]
             STATUS = inmate[1]
-            print(NAME + ': ' + str(STATUS))
-
+            text += '{:^20s}|{:^20s}\n'.format(NAME, str(STATUS))
+        return text
 
 if __name__ == "__main__":
     w = WhoIs()
     w.compare_macs()
-    w.print_inmates_status()
-    # TODO remove files
+    f = w.create_inmates_status_file()
+    sys.stdout.write('%s\r' % f[:-2])
+    sys.stdout.flush()
