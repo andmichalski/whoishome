@@ -50,17 +50,23 @@ class WhoIs():
         inmates = self.get_inmates_status()
         text = ""
         text += '{:^20s}|{:^20s}\n'.format("NAME", "IS_ACTIVE")
-        text += 41*"-" + "\n"
+        text += 41 * "-" + "\n"
         for inmate in inmates:
             NAME = inmate[0]
             STATUS = inmate[1]
             text += '{:^20s}|{:^20s}\n'.format(NAME, str(STATUS))
         return text
 
+    def write_log_file(self, text):
+        with open("inmates_log.txt", "w+") as f:
+            f.write(text)
+
+
 if __name__ == "__main__":
     w = WhoIs()
     new_macs = w.compare_macs()
-    f = w.create_inmates_status_file()
-    print(f)
+    text_log = w.create_inmates_status_file()
+    print(text_log)
+    # w.write_log_file(text_log)
     if new_macs != []:
         print("New macs: ", new_macs)
