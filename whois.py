@@ -3,14 +3,14 @@ import sys
 
 class WhoIs():
 
-    def __init__(self):
+    def __init__(self, home_macs='home_macs.txt', active_macs='active_macs.txt'):
         self.my_ip = None
-        self.home_macs = self._get_home_macs()
-        self.active_macs = self._open_active_macs()
+        self.home_macs = self._get_home_macs(home_macs)
+        self.active_macs = self._open_active_macs(active_macs)
 
-    def _get_home_macs(self):
+    def _get_home_macs(self, home_macs_file):
         home_macs = {}
-        with open('home_macs.txt', 'r') as f:
+        with open(home_macs_file, 'r') as f:
             for line in f.read().splitlines():
                 record = line.split(" ")
                 MAC = record[1]
@@ -19,9 +19,9 @@ class WhoIs():
                 home_macs[MAC] = [IP, NAME, False]
         return home_macs
 
-    def _open_active_macs(self):
+    def _open_active_macs(self, active_macs_file):
         active_macs = {}
-        with open('active_macs.txt', 'r') as f:
+        with open(active_macs_file, 'r') as f:
             for line in f.read().splitlines():
                 record = line.split(" ")
                 if ":" in record[1]:
@@ -41,13 +41,13 @@ class WhoIs():
                 new_macs.append((active_mac, self.active_macs[active_mac]))
         return new_macs
 
-    def get_inmates_status(self):
+    def get_inmates(self):
         inmates = [(value[1], value[2]) for (_, value) in
                    self.home_macs.items()]
         return inmates
 
     def create_inmates_status_file(self):
-        inmates = self.get_inmates_status()
+        inmates = self.get_inmates()
         text = ""
         text += '{:^20s}|{:^20s}\n'.format("NAME", "IS_ACTIVE")
         text += 41 * "-" + "\n"
