@@ -62,7 +62,6 @@ class WhoIsTests(unittest.TestCase):
         w = WhoIs('test_home_macs.txt', 'test_active_macs.txt')
         w.compare_macs()
         text = w.create_inmates_status_file()
-        print(text)
         expected_text = ("        NAME        |     IS_ACTIVE      \n"
         "-----------------------------------------\n"
         "      TP_LINK       |        True        \n"
