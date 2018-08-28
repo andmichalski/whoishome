@@ -37,6 +37,7 @@ class WhoIsTests(unittest.TestCase):
                                "B8:17:EC:2F:6E:16":"192.168.1.2"}
         self.mock_open_home = mock_open(read_data=home_macs_content)
         self.mock_open_active = mock_open(read_data=active_macs_content)
+import ipdb; ipdb.set_trace()
 
     @classmethod
     def tearDownClass(cls):
