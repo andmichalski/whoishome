@@ -1,9 +1,9 @@
-from unittest.mock import mock_open, MagicMock
 import os
 import unittest
 from unittest import mock
+from unittest.mock import MagicMock, mock_open, patch
+
 from whois import WhoIs
-from unittest.mock import patch
 
 
 class WhoIsTests(unittest.TestCase):
